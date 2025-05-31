@@ -301,7 +301,6 @@ struct ContentView: View {
             }
         }
     }
-
     
     private var step4View: some View {
         VStack(spacing: 16) {
@@ -395,9 +394,14 @@ struct ContentView: View {
                 dismissButton: .default(Text("OK"))
             )
         }
+        .onAppear {
+            if autoRunShortcut && !shortcutRunInThisSession {
+                runShortcut(named: "writetosymlinked")
+                shortcutRunInThisSession = true
+            }
+        }
     }
-
-
+    
     private func createSymlink() {
         do {
             try FileManager.default.removeItem(at: symlinkURL)
